@@ -1,0 +1,8 @@
+安装gpg https://www.gpg4win.org/download.html
+gpg --gen-key 生成key
+gpg --keyserver hkp://pool.sks-keyservers.net --send-keys CD73ED98215E93BEDBB1500B6CF1001F8492D7C1 上传公钥
+gpg --keyserver hkp://keyserver.ubuntu.com:11371 --send-keys CD73ED98215E93BEDBB1500B6CF1001F8492D7C1 上传公钥
+mvn clean deploy -P sonatype-oss-release 上传jar包
+
+q: 控制台乱码
+maven -> running -> vm op -> -Dfile.encoding=GBK

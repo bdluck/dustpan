@@ -1,7 +1,6 @@
 package io.github.bdluck.merge;
 
 import io.github.bdluck.handle.ByteHandler;
-import com.github.bdluck.merge.basic.*;
 import io.github.bdluck.merge.data.MergeData;
 import io.github.bdluck.merge.basic.*;
 
