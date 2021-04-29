@@ -6,3 +6,7 @@ mvn clean deploy -P sonatype-oss-release 上传jar包
 
 q: 控制台乱码
 maven -> running -> vm op -> -Dfile.encoding=GBK
+
+
+#更新版本号-DgenerateBackupPoms=false  不生成备份文件
+mvn versions:set -DnewVersion=1.0.2-SNAPSHOT -DgenerateBackupPoms=false

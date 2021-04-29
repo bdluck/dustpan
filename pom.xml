@@ -13,7 +13,7 @@
 
     <groupId>io.github.bdluck</groupId>
     <artifactId>dustpan-parent</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 
     <description>
         不知道用来做什么的框架，暂时先这样吧
