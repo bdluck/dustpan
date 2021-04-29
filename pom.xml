@@ -23,7 +23,6 @@
 
     <modules>
         <module>dustpan-common</module>
-        <module>dustpan-dependencies</module>
         <module>dustpan-example</module>
         <module>dustpan-gateway</module>
         <module>dustpan-template</module>
@@ -36,16 +35,29 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.build.timestamp.format>yy.MM.dd.HHmm</maven.build.timestamp.format>
+        <!-- Version control-->
+        <sl4j-api.version>1.7.30</sl4j-api.version>
+        <netty.version>4.1.60.Final</netty.version>
+        <disruptor.version>3.3.11</disruptor.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- All release modules -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>dustpan-dependencies</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${sl4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -98,4 +110,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
