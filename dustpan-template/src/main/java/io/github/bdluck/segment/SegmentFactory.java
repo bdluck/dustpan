@@ -1,6 +1,6 @@
 package io.github.bdluck.segment;
 
-import io.github.bdluck.handle.ByteHandler;
+import io.github.bdluck.handle.BatchHandler;
 import io.github.bdluck.segment.data.SegmentData;
 
 import java.util.List;
@@ -37,19 +37,19 @@ public class SegmentFactory {
      * @param segmentData 分段数据
      * @return 分段对象
      */
-    public static Segment getInstance(SegmentData segmentData) {
-        Segment segment = null;
+    public static BaseSegment getInstance(SegmentData segmentData) {
+        BaseSegment baseSegment = null;
         switch (segmentData.getSegmentType()) {
             case BIT:
                 SegmentBit segmentBit = new SegmentBit(segmentData.getSize());
                 segmentData.getBitMap().forEach(bitSegment -> segmentBit.append(bitSegment.getSegmentMark(), bitSegment.getSize()));
-                segment = segmentBit.order(segmentData.getSegmentOrder());
+                baseSegment = segmentBit.order(segmentData.getSegmentOrder());
                 break;
             case BYTE:
-                segment = new SegmentByte(segmentData.getSegmentMark(), segmentData.getSize()).order(segmentData.getSegmentOrder());
+                baseSegment = new SegmentByte(segmentData.getSegmentMark(), segmentData.getSize()).order(segmentData.getSegmentOrder());
                 break;
             case REMAIN:
-                segment = new SegmentRemain(segmentData.getSegmentMark()).order(segmentData.getSegmentOrder());
+                baseSegment = new SegmentRemain(segmentData.getSegmentMark()).order(segmentData.getSegmentOrder());
                 break;
             case RETRY:
                 List<Segment> segmentList = segmentData.getChild().stream()
@@ -57,11 +57,11 @@ public class SegmentFactory {
                         // 过滤子分段仍为重复分段的数据
                         .filter(seg -> !(seg instanceof SegmentRetry))
                         .collect(Collectors.toList());
-                segment = new SegmentRetry(segmentData.getSegmentMark(), segmentData.getSize(), segmentList).order(segmentData.getSegmentOrder());
+                baseSegment = new SegmentRetry(segmentData.getSegmentMark(), segmentData.getSize(), segmentList).order(segmentData.getSegmentOrder());
         }
         // 获取拦截参数
-        List<ByteHandler> packHandlers = segmentData.getPackHandler();
-        segment.addHandler(packHandlers);
-        return segment;
+        BatchHandler batchHandler = new BatchHandler(segmentData.getPackHandler());
+        baseSegment.setHandler(batchHandler);
+        return baseSegment;
     }
 }

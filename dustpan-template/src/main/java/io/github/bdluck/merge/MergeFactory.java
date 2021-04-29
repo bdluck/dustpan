@@ -1,6 +1,6 @@
 package io.github.bdluck.merge;
 
-import io.github.bdluck.handle.ByteHandler;
+import io.github.bdluck.handle.BatchHandler;
 import io.github.bdluck.merge.data.MergeData;
 import io.github.bdluck.merge.basic.*;
 
@@ -62,8 +62,8 @@ public class MergeFactory {
                 break;
         }
         // 获取拦截参数
-        List<ByteHandler> packHandlers = mergeData.getPackHandler();
-        baseMerge.addHandler(packHandlers);
+        BatchHandler batchHandler = new BatchHandler(mergeData.getPackHandler());
+        baseMerge.setHandler(batchHandler);
         // 写入重复读参数
         baseMerge.setRetry(mergeData.getRetryType(), mergeData.getRetryKey(), mergeData.getRetrySize());
         return baseMerge;

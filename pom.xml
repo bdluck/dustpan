@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>io.github.bdluck</groupId>
-    <artifactId>dustpan</artifactId>
+    <artifactId>dustpan-parent</artifactId>
     <version>1.0</version>
 
     <description>
@@ -22,6 +22,10 @@
     </description>
 
     <modules>
+        <module>dustpan-common</module>
+        <module>dustpan-dependencies</module>
+        <module>dustpan-example</module>
+        <module>dustpan-gateway</module>
         <module>dustpan-template</module>
     </modules>
 
@@ -32,29 +36,16 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.build.timestamp.format>yy.MM.dd.HHmm</maven.build.timestamp.format>
-        <!--引入版本控制-->
-        <sl4j-api.version>1.7.30</sl4j-api.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${sl4j-api.version}</version>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>dustpan-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -107,5 +98,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -9,13 +9,21 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dustpan-template</artifactId>
+    <artifactId>dustpan-gateway</artifactId>
 
     <description>
-        模板引擎 -> 数据解析
+        网关 -> 设备接入
     </description>
 
     <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>dustpan-common</artifactId>

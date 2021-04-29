@@ -1,6 +1,6 @@
 package io.github.bdluck;
 
-import io.github.bdluck.handle.ByteHandler;
+import io.github.bdluck.handle.BatchHandler;
 import io.github.bdluck.merge.MergeFactory;
 import io.github.bdluck.merge.MergeProcessor;
 import io.github.bdluck.segment.SegmentFactory;
@@ -42,14 +42,14 @@ public class TemplateFactory {
      */
     public static Template getInstance(TemplateData templateData) {
         // 获取拦截参数
-        List<ByteHandler> packHandlers = templateData.getPackHandler();
+        BatchHandler batchHandler = new BatchHandler(templateData.getPackHandler());
         // 获取分段处理器
         SegmentProcessor segmentProcessor = SegmentFactory.getProcessor(templateData.getSegment());
         // 获取合并处理器
         MergeProcessor mergeProcessor = MergeFactory.getProcessor(templateData.getMerge());
         // 构建模板
         Template template = new Template(templateData.getName(), templateData.getDispenseMark(), segmentProcessor, mergeProcessor);
-        template.addHandler(packHandlers);
+        template.setHandler(batchHandler);
         return template;
     }
 }

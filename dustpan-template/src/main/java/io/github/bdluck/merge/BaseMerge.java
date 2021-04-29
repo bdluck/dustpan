@@ -1,6 +1,6 @@
 package io.github.bdluck.merge;
 
-import io.github.bdluck.handle.SimpleHandler;
+import io.github.bdluck.handle.AbstractHandler;
 import io.github.bdluck.merge.basic.BasicInt;
 import io.github.bdluck.merge.data.RetryType;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author bdluck
  */
-public abstract class BaseMerge extends SimpleHandler implements Merge {
+public abstract class BaseMerge extends AbstractHandler implements Merge {
 
     /**
      * 合并名称

@@ -1,6 +1,6 @@
 package io.github.bdluck;
 
-import io.github.bdluck.handle.SimpleHandler;
+import io.github.bdluck.handle.AbstractHandler;
 import io.github.bdluck.merge.MergeProcessor;
 import io.github.bdluck.merge.MergeResult;
 import io.github.bdluck.segment.SegmentProcessor;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author bdluck
  */
-public class Template extends SimpleHandler {
+public class Template extends AbstractHandler {
 
     /**
      * 模板名称

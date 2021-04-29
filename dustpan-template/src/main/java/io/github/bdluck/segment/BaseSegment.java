@@ -1,12 +1,12 @@
 package io.github.bdluck.segment;
 
-import io.github.bdluck.handle.SimpleHandler;
+import io.github.bdluck.handle.AbstractHandler;
 import io.github.bdluck.segment.data.SegmentOrder;
 
 /**
  * @author bdluck
  */
-public abstract class BaseSegment extends SimpleHandler implements Segment {
+public abstract class BaseSegment extends AbstractHandler implements Segment {
 
     /**
      * 读取顺序
