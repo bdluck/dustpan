@@ -38,6 +38,10 @@ public class UnpackData {
      */
     private int length;
     /**
+     * 分隔符
+     */
+    private byte[] delimit;
+    /**
      * 拆包类型（定长，不定长）
      */
     private UnpackType unpackType;
@@ -116,5 +120,13 @@ public class UnpackData {
 
     public void setPackHandler(List<ByteHandler> packHandler) {
         this.packHandler = packHandler;
+    }
+
+    public byte[] getDelimit() {
+        return delimit;
+    }
+
+    public void setDelimit(byte[] delimit) {
+        this.delimit = delimit;
     }
 }

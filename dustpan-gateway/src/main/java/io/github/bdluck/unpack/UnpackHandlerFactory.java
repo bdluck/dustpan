@@ -51,6 +51,10 @@ public class UnpackHandlerFactory implements ChannelHandlerFactory {
                         unpackData.isFailFast());
                 lengthUnpack.setHandler(batchHandler);
                 return lengthUnpack;
+            case LINE:
+                return new LineUnpack(unpackData.getMaxFrameLength());
+            case SPLIT:
+                return new SplitUnpack(unpackData.getMaxFrameLength(), unpackData.getDelimit());
         }
         return null;
     }
