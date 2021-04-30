@@ -13,7 +13,7 @@
 
     <groupId>io.github.bdluck</groupId>
     <artifactId>dustpan-parent</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <description>
         基础网关和数据解析框架

@@ -9,4 +9,4 @@ maven -> running -> vm op -> -Dfile.encoding=GBK
 
 
 #更新版本号-DgenerateBackupPoms=false  不生成备份文件
-mvn versions:set -DnewVersion=1.0.2-SNAPSHOT -DgenerateBackupPoms=false
+mvn versions:set -DnewVersion=1.0.3 -DgenerateBackupPoms=false
