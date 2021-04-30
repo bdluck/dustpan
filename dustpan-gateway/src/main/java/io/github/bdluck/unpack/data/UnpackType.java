@@ -1,4 +1,4 @@
-package io.github.bdluck.unpack;
+package io.github.bdluck.unpack.data;
 
 /**
  * @author bdluck

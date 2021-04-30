@@ -5,24 +5,20 @@
     <parent>
         <artifactId>dustpan-parent</artifactId>
         <groupId>io.github.bdluck</groupId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dustpan-gateway</artifactId>
 
     <description>
-        网关 -> 设备接入
+        网关 -> 接入连接以及推送
     </description>
 
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

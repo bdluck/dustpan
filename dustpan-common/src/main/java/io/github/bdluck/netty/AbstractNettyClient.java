@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author bdluck
  */
-public abstract class AbstractNettyClient implements HandlerProvider, Server {
+public abstract class AbstractNettyClient implements  Server {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -26,11 +26,13 @@ public abstract class AbstractNettyClient implements HandlerProvider, Server {
     protected final String host;
     protected final int port;
     protected final String serverId;
+    private final ChannelHandlerFactory factory;
 
-    public AbstractNettyClient(String serverId, String host, int port) {
+    public AbstractNettyClient(String serverId, String host, int port, ChannelHandlerFactory factory) {
         this.serverId = serverId;
         this.host = host;
         this.port = port;
+        this.factory = factory;
     }
 
     @Override
@@ -96,7 +98,7 @@ public abstract class AbstractNettyClient implements HandlerProvider, Server {
             bootstrap.group(this.workGroup);
             bootstrap.channel(NioSocketChannel.class);
             bootstrap.option(ChannelOption.TCP_NODELAY, true);
-            bootstrap.handler(channelInitializer());
+            bootstrap.handler(factory.newInstance());
             this.init.set(true);
         }
     }

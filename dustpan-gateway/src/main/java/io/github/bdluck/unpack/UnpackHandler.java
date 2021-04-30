@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * @author bdluck
  */
-public class UnpackDecoder extends ByteToMessageDecoder {
+class UnpackHandler extends ByteToMessageDecoder {
     /**
      * 拆包器
      */
     private final List<Unpack> unpackList;
 
-    public UnpackDecoder(List<Unpack> unpackList) {
+    UnpackHandler(List<Unpack> unpackList) {
         this.unpackList = unpackList;
     }
 

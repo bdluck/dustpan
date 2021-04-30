@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--配置全局变量-->
+    <springProfile name="dev">
+        <property name="LOG_HOME" value="logs/"/>
+    </springProfile>
+    <springProfile name="test">
+        <property name="LOG_HOME" value="logs/"/>
+    </springProfile>
+    <springProfile name="prod">
+        <property name="LOG_HOME" value="logs/"/>
+    </springProfile>
+    <springProfile name="docker">
+        <property name="LOG_HOME" value="logs/"/>
+    </springProfile>
+    <springProperty scope="context" name="LOG_NAME" source="spring.application.name"/>
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:-}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!-- 控制台输出日志 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志级别过滤INFO以下 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 普通log输出 -->
+    <appender name="dailyRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/%d{yyyy,aux}/%d{yyyy-MM,aux}/${LOG_NAME}-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- 3天的文件 -->
+            <maxHistory>7</maxHistory>
+            <!-- 上限大小，最大不超过10G -->
+            <totalSizeCap>10GB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- error级别错误日志文件 -->
+    <appender name="errorDailyRolling" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_HOME}/${LOG_NAME}-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <append>true</append>
+        <encoder>
+            <pattern>%d [%thread] %-5level- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="reactor" level="WARN"/>
+    <logger name="com.netflix" level="WARN"/>
+    <logger name="com.zaxxer.hikari" level="WARN"/>
+    <logger name="io.undertow" level="WARN"/>
+    <logger name="io.lettuce" level="WARN"/>
+    <logger name="io.netty" level="WARN"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.mongodb.driver" level="WARN"/>
+    <logger name="org.xnio" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="springfox" level="WARN"/>
+    <logger name="org.elasticsearch" level="WARN"/>
+    <logger name="Validator" level="ERROR"/>
+    <logger name="com.jimi.platform.ice.spring.IceClassPathScanner" level="WARN"/>
+    <logger name="com.fasterxml.jackson.databind.introspect.POJOPropertyBuilder" level="WARN"/>
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="dailyRolling"/>
+            <appender-ref ref="errorDailyRolling"/>
+        </root>
+    </springProfile>
+    <springProfile name="test">
+        <root level="DEBUG">
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="dailyRolling"/>
+            <appender-ref ref="errorDailyRolling"/>
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="dailyRolling"/>
+            <appender-ref ref="errorDailyRolling"/>
+        </root>
+    </springProfile>
+    <springProfile name="docker">
+        <root level="INFO">
+            <appender-ref ref="dailyRolling"/>
+            <appender-ref ref="errorDailyRolling"/>
+        </root>
+    </springProfile>
+</configuration>

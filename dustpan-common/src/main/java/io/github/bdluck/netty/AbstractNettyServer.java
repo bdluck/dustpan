@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author bdluck
  */
-public abstract class AbstractNettyServer implements HandlerProvider, Server {
+public abstract class AbstractNettyServer implements Server {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -21,14 +21,17 @@ public abstract class AbstractNettyServer implements HandlerProvider, Server {
     private NioEventLoopGroup workGroup;
     private final String serverId;
     private final int[] port;
+    private final ChannelHandlerFactory factory;
 
-    public AbstractNettyServer(String serverId, int port) {
+    public AbstractNettyServer(String serverId, int port, ChannelHandlerFactory factory) {
         this.serverId = serverId;
         this.port = new int[]{port};
+        this.factory = factory;
     }
 
-    public AbstractNettyServer(String serverId, int... port) {
+    public AbstractNettyServer(String serverId, ChannelHandlerFactory factory, int... port) {
         this.serverId = serverId;
+        this.factory = factory;
         this.port = port;
     }
 
@@ -43,7 +46,7 @@ public abstract class AbstractNettyServer implements HandlerProvider, Server {
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
         bootstrap.option(ChannelOption.TCP_NODELAY, true);
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
-        bootstrap.childHandler(channelInitializer());
+        bootstrap.childHandler(factory.newInstance());
         try {
             for (int p : port) {
                 ChannelFuture feature = bootstrap.bind(p);

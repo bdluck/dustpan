@@ -2,6 +2,9 @@ package io.github.bdluck.unpack;
 
 import io.github.bdluck.handle.BatchHandler;
 import io.github.bdluck.handle.ByteHandler;
+import io.github.bdluck.netty.ChannelHandlerFactory;
+import io.github.bdluck.unpack.data.UnpackData;
+import io.netty.channel.ChannelHandler;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,16 +12,18 @@ import java.util.stream.Collectors;
 /**
  * @author bdluck
  */
-public class UnpackFactory {
+public class UnpackHandlerFactory implements ChannelHandlerFactory {
 
-    /**
-     * 获取拆包实例
-     *
-     * @param unpackDataList 拆包数据集合
-     * @return 拆包实例
-     */
-    public static List<Unpack> getInstance(List<UnpackData> unpackDataList) {
-        return unpackDataList.stream().map(UnpackFactory::getInstance).collect(Collectors.toList());
+    private final List<Unpack> unpackList;
+
+    public UnpackHandlerFactory(List<UnpackData> unpackDataList) {
+        this.unpackList = unpackDataList.stream().map(UnpackHandlerFactory::getInstance)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ChannelHandler newInstance() {
+        return new UnpackHandler(unpackList);
     }
 
     /**

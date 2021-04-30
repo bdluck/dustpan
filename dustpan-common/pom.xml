@@ -5,11 +5,15 @@
     <parent>
         <artifactId>dustpan-parent</artifactId>
         <groupId>io.github.bdluck</groupId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dustpan-common</artifactId>
+
+    <description>
+        基础包
+    </description>
 
     <dependencies>
         <dependency>
@@ -19,11 +23,6 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

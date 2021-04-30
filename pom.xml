@@ -13,12 +13,10 @@
 
     <groupId>io.github.bdluck</groupId>
     <artifactId>dustpan-parent</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <description>
-        不知道用来做什么的框架，暂时先这样吧
-        dustpan-template
-        基于json配置的模板引擎，对byte数据进行解析
+        基础网关和数据解析框架
     </description>
 
     <modules>
@@ -38,7 +36,6 @@
         <!-- Version control-->
         <sl4j-api.version>1.7.30</sl4j-api.version>
         <netty.version>4.1.60.Final</netty.version>
-        <disruptor.version>3.3.11</disruptor.version>
     </properties>
 
     <dependencyManagement>
@@ -53,11 +50,6 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.lmax</groupId>
-                <artifactId>disruptor</artifactId>
-                <version>${disruptor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
