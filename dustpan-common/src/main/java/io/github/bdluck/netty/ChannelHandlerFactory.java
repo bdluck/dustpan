@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandler;
 /**
  * @author bdluck
  */
+@FunctionalInterface
 public interface ChannelHandlerFactory {
 
     /**

@@ -10,15 +10,12 @@ public class PacketHandlerFactory implements ChannelHandlerFactory {
 
     private final PacketConsumer consumer;
 
-    private final ConnectManager connectManager;
-
-    public PacketHandlerFactory(PacketConsumer consumer, ConnectManager connectManager) {
+    public PacketHandlerFactory(PacketConsumer consumer) {
         this.consumer = consumer;
-        this.connectManager = connectManager;
     }
 
     @Override
     public ChannelHandler newInstance() {
-        return new PacketHandler(consumer, connectManager);
+        return new PacketHandler(consumer);
     }
 }

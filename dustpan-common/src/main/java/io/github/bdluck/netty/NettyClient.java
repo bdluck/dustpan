@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author bdluck
  */
-public abstract class AbstractNettyClient implements  Server {
+public class NettyClient implements Server {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -28,11 +28,11 @@ public abstract class AbstractNettyClient implements  Server {
     protected final String serverId;
     private final ChannelHandlerFactory factory;
 
-    public AbstractNettyClient(String serverId, String host, int port, ChannelHandlerFactory factory) {
+    public NettyClient(String serverId,ChannelHandlerFactory factory, String host, int port) {
         this.serverId = serverId;
+        this.factory = factory;
         this.host = host;
         this.port = port;
-        this.factory = factory;
     }
 
     @Override

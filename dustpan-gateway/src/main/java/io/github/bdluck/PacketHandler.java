@@ -14,11 +14,8 @@ class PacketHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     private final PacketConsumer consumer;
 
-    private final ConnectManager connectManager;
-
-    PacketHandler(PacketConsumer consumer, ConnectManager connectManager) {
+    PacketHandler(PacketConsumer consumer) {
         this.consumer = consumer;
-        this.connectManager = connectManager;
     }
 
     @Override
@@ -26,8 +23,7 @@ class PacketHandler extends SimpleChannelInboundHandler<ByteBuf> {
         byte[] data = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(data);
         Packet packet = new Packet();
-        String uid = connectManager.getUid(ctx.channel());
-        packet.setUid(uid);
+        packet.setChannel(ctx.channel());
         packet.setPacketType(PacketType.REPORT);
         packet.setData(data);
         consumer.accept(packet);
@@ -35,9 +31,8 @@ class PacketHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-        String uid = connectManager.addChannel(ctx.channel());
         Packet packet = new Packet();
-        packet.setUid(uid);
+        packet.setChannel(ctx.channel());
         packet.setPacketType(PacketType.CONNECT);
         consumer.accept(packet);
         ctx.fireChannelActive();
@@ -45,9 +40,8 @@ class PacketHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        String uid = connectManager.removeChannel(ctx.channel());
         Packet packet = new Packet();
-        packet.setUid(uid);
+        packet.setChannel(ctx.channel());
         packet.setPacketType(PacketType.DISCONNECT);
         consumer.accept(packet);
         ctx.fireChannelInactive();
@@ -55,7 +49,6 @@ class PacketHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        String uid = connectManager.getUid(ctx.channel());
-        log.error("uid:{} client:{} exception:{}", uid, ctx.channel().remoteAddress().toString(), cause.getMessage(), cause);
+        log.error("channelId:{} client:{} exception:{}", ctx.channel().id().asLongText(), ctx.channel().remoteAddress().toString(), cause.getMessage(), cause);
     }
 }

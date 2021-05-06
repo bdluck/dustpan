@@ -1,6 +1,7 @@
 package io.github.bdluck;
 
 import io.github.bdluck.handle.ByteHandler;
+import io.github.bdluck.netty.NettyServer;
 import io.github.bdluck.netty.BatchChannelHandlerFactory;
 import io.github.bdluck.netty.ChannelHandlerFactory;
 import io.github.bdluck.unpack.data.UnpackData;
@@ -19,10 +20,8 @@ public class GatewayExample {
     public static void main(String[] args) {
 
         // 获取消费者
-        ConnectManager connectManager = new ConnectManager();
-        ChannelHandlerFactory factory = new PacketHandlerFactory(packet -> {
-            System.out.println("收到消息 uid:" + packet.getUid() + " type:" + packet.getPacketType() + " data:" + HexUtils.getHexString(packet.getData()));
-        }, connectManager);
+        ChannelHandlerFactory factory = new PacketHandlerFactory(packet ->
+                System.out.println("收到消息  type:" + packet.getPacketType() + " data:" + HexUtils.getHexString(packet.getData())));
 
         // 拆包器
         UnpackData unpackData = new UnpackData();
@@ -57,7 +56,7 @@ public class GatewayExample {
 
         BatchChannelHandlerFactory batchChannelHandlerFactory = new BatchChannelHandlerFactory(Arrays.asList(factory, factory1));
 
-        GatewayServer gatewayServer = new GatewayServer("测试网关", 21100, batchChannelHandlerFactory);
+        NettyServer gatewayServer = new NettyServer("测试网关", batchChannelHandlerFactory, 21100);
         gatewayServer.start();
 
     }

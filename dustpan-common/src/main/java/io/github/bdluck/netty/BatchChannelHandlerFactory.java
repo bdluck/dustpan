@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,6 +16,10 @@ public class BatchChannelHandlerFactory implements ChannelHandlerFactory {
 
     public BatchChannelHandlerFactory(List<ChannelHandlerFactory> factoryList) {
         this.factoryList = factoryList;
+    }
+
+    public BatchChannelHandlerFactory(ChannelHandlerFactory... factories) {
+        this.factoryList = Arrays.asList(factories);
     }
 
     @Override

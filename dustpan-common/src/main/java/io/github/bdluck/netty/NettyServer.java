@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author bdluck
  */
-public abstract class AbstractNettyServer implements Server {
+public class NettyServer implements Server {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -23,13 +23,13 @@ public abstract class AbstractNettyServer implements Server {
     private final int[] port;
     private final ChannelHandlerFactory factory;
 
-    public AbstractNettyServer(String serverId, int port, ChannelHandlerFactory factory) {
+    public NettyServer(String serverId, ChannelHandlerFactory factory, int port) {
         this.serverId = serverId;
-        this.port = new int[]{port};
         this.factory = factory;
+        this.port = new int[]{port};
     }
 
-    public AbstractNettyServer(String serverId, ChannelHandlerFactory factory, int... port) {
+    public NettyServer(String serverId, ChannelHandlerFactory factory, int... port) {
         this.serverId = serverId;
         this.factory = factory;
         this.port = port;

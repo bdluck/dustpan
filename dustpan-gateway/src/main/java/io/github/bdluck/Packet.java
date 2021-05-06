@@ -1,14 +1,16 @@
 package io.github.bdluck;
 
+import io.netty.channel.Channel;
+
 /**
  * @author bdluck
  */
 public class Packet {
 
     /**
-     * 会话信息
+     * 连接信息
      */
-    private String uid;
+    private Channel channel;
     /**
      * 包类型
      */
@@ -18,12 +20,12 @@ public class Packet {
      */
     private byte[] data;
 
-    public String getUid() {
-        return uid;
+    public Channel getChannel() {
+        return channel;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setChannel(Channel channel) {
+        this.channel = channel;
     }
 
     public PacketType getPacketType() {

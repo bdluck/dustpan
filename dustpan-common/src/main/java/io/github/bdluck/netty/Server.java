@@ -8,7 +8,7 @@ public interface Server {
     /**
      * 开启服务
      */
-    void start() ;
+    void start();
 
     /**
      * 停止服务
